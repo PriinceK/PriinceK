@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Quiz App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Study Quiz App</h1>
+        <div id="start-screen">
+            <p>Select a topic to begin:</p>
+            <button class="topic-btn" data-topic="math">Math</button>
+            <button class="topic-btn" data-topic="history">History</button>
+            <button class="topic-btn" data-topic="science">Science</button>
+        </div>
+
+        <div id="quiz-screen" class="hidden">
+            <div id="progress"></div>
+            <div id="question"></div>
+            <div id="options"></div>
+            <button id="next-btn" class="hidden">Next</button>
+        </div>
+
+        <div id="score-screen" class="hidden">
+            <h2>Quiz Complete!</h2>
+            <p id="final-score"></p>
+            <p id="high-score" class="hidden"></p>
+            <button id="restart-btn">Restart</button>
+        </div>
+        <div class="controls">
+            <label><input type="checkbox" id="sound-toggle" checked> Sound</label>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
