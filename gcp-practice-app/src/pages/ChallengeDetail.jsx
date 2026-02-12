@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import {
   ArrowLeft, ArrowRight, CheckCircle2, XCircle, Plus, X, Lightbulb,
-  Eye, EyeOff, RotateCcw, AlertTriangle, Trophy, Sparkles
+  Eye, EyeOff, RotateCcw, AlertTriangle, Sparkles
 } from 'lucide-react'
 import { CHALLENGES } from '../data/challenges'
 import { GCP_SERVICES, GCP_SERVICE_CATEGORIES } from '../data/gcpServices'
@@ -34,10 +35,10 @@ export default function ChallengeDetail() {
 
   if (!challenge) {
     return (
-      <div className="max-w-3xl mx-auto px-4 py-12 text-center page-enter">
-        <AlertTriangle className="w-12 h-12 text-gcp-yellow mx-auto mb-4" aria-hidden="true" />
-        <h2 className="text-xl font-semibold text-gcp-text mb-2">Challenge not found</h2>
-        <Link to="/challenges" className="text-gcp-blue">Back to challenges</Link>
+      <div className="max-w-3xl mx-auto px-4 py-12 text-center">
+        <AlertTriangle className="w-12 h-12 text-neon-amber mx-auto mb-4" aria-hidden="true" />
+        <h2 className="text-xl font-semibold text-nebula-text mb-2">Challenge not found</h2>
+        <Link to="/challenges" className="text-neon-cyan hover:underline">Back to challenges</Link>
       </div>
     )
   }
@@ -84,7 +85,6 @@ export default function ChallengeDetail() {
     setShowSolution(false)
   }
 
-  // Navigate to next challenge
   const currentIdx = CHALLENGES.indexOf(challenge)
   const nextChallenge = currentIdx < CHALLENGES.length - 1 ? CHALLENGES[currentIdx + 1] : null
 
@@ -93,27 +93,31 @@ export default function ChallengeDetail() {
   const percentage = submitted ? Math.round((score / challenge.maxScore) * 100) : 0
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 page-enter">
+    <div className="max-w-6xl mx-auto px-4 py-8">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm mb-6">
-        <Link to="/challenges" className="text-gcp-muted hover:text-gcp-text no-underline flex items-center gap-1">
+        <Link to="/challenges" className="text-nebula-muted hover:text-nebula-text no-underline flex items-center gap-1 transition-colors">
           <ArrowLeft className="w-4 h-4" /> Challenges
         </Link>
-        <span className="text-gcp-muted">/</span>
-        <span className="text-gcp-text">{challenge.title}</span>
+        <span className="text-nebula-dim">/</span>
+        <span className="text-nebula-text">{challenge.title}</span>
       </div>
 
       {/* Header */}
-      <div className="bg-gcp-card border border-gcp-border rounded-2xl p-6 mb-6">
-        <h1 className="text-2xl font-bold text-gcp-text mb-2">{challenge.title}</h1>
-        <p className="text-sm text-gcp-muted leading-relaxed mb-4">{challenge.description}</p>
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="glass-card-static rounded-2xl p-6 mb-6"
+      >
+        <h1 className="text-2xl font-extrabold text-nebula-text mb-2" style={{ fontFamily: 'Syne, system-ui, sans-serif' }}>{challenge.title}</h1>
+        <p className="text-sm text-nebula-muted leading-relaxed mb-4">{challenge.description}</p>
 
         <div className="mb-4">
-          <h3 className="text-sm font-semibold text-gcp-text mb-2">Requirements:</h3>
-          <ul className="space-y-1">
+          <h3 className="text-sm font-bold text-nebula-text mb-2" style={{ fontFamily: 'Syne, system-ui, sans-serif' }}>Requirements:</h3>
+          <ul className="space-y-1.5">
             {challenge.requirements.map((req, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-gcp-muted">
-                <span className="text-gcp-blue mt-0.5" aria-hidden="true">•</span>
+              <li key={i} className="flex items-start gap-2 text-sm text-nebula-muted">
+                <span className="text-neon-cyan mt-0.5" aria-hidden="true">&bull;</span>
                 {req}
               </li>
             ))}
@@ -122,7 +126,7 @@ export default function ChallengeDetail() {
 
         <button
           onClick={() => setShowHints(!showHints)}
-          className="flex items-center gap-2 text-sm text-gcp-yellow hover:text-gcp-yellow/80 transition-colors bg-transparent border-0 cursor-pointer"
+          className="flex items-center gap-2 text-sm text-neon-amber hover:text-neon-amber/80 transition-colors bg-transparent border-0 cursor-pointer"
           aria-expanded={showHints}
         >
           <Lightbulb className="w-4 h-4" aria-hidden="true" />
@@ -131,20 +135,31 @@ export default function ChallengeDetail() {
         {showHints && (
           <div className="mt-3 space-y-2 slide-down">
             {challenge.hints.map((hint, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-gcp-yellow/80 bg-gcp-yellow/5 rounded-lg p-2 list-item-enter" style={{ animationDelay: `${i * 80}ms` }}>
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.08 }}
+                className="flex items-start gap-2 text-sm text-neon-amber/80 bg-neon-amber/5 rounded-lg p-2.5 border border-neon-amber/10"
+              >
                 <Lightbulb className="w-3.5 h-3.5 shrink-0 mt-0.5" aria-hidden="true" />
                 {hint}
-              </div>
+              </motion.div>
             ))}
           </div>
         )}
-      </div>
+      </motion.div>
 
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Service picker */}
         <div className="lg:col-span-2">
-          <div className="bg-gcp-card border border-gcp-border rounded-2xl p-4">
-            <h3 className="text-sm font-semibold text-gcp-text mb-3">Select GCP Services</h3>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="glass-card-static rounded-2xl p-5"
+          >
+            <h3 className="text-sm font-bold text-nebula-text mb-3" style={{ fontFamily: 'Syne, system-ui, sans-serif' }}>Select GCP Services</h3>
 
             <input
               type="text"
@@ -152,17 +167,18 @@ export default function ChallengeDetail() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               disabled={submitted}
-              className="w-full px-3 py-2 bg-gcp-darker border border-gcp-border rounded-lg text-sm text-gcp-text placeholder-gcp-muted mb-3 outline-none focus:border-gcp-blue"
+              className="w-full px-3 py-2.5 bg-nebula-deep/60 border border-nebula-border rounded-lg text-sm text-nebula-text placeholder-nebula-dim mb-3 outline-none focus:border-neon-cyan/40 transition-colors"
               aria-label="Search GCP services"
             />
 
             {/* Category filters */}
-            <div className="flex flex-wrap gap-1.5 mb-3" role="group" aria-label="Filter by category">
+            <div className="flex flex-wrap gap-1.5 mb-4" role="group" aria-label="Filter by category">
               <button
                 onClick={() => setActiveCategory(null)}
-                className={`text-xs px-2 py-1 rounded-md border transition-colors cursor-pointer ${
-                  !activeCategory ? 'bg-gcp-blue/15 border-gcp-blue/40 text-gcp-blue' : 'bg-transparent border-gcp-border text-gcp-muted hover:text-gcp-text'
+                className={`text-xs px-2.5 py-1 rounded-md border transition-all cursor-pointer ${
+                  !activeCategory ? 'bg-neon-cyan/10 border-neon-cyan/30 text-neon-cyan' : 'bg-transparent border-nebula-border text-nebula-muted hover:text-nebula-text'
                 }`}
+                style={{ fontFamily: 'JetBrains Mono, monospace' }}
                 aria-pressed={!activeCategory}
               >
                 All
@@ -171,12 +187,12 @@ export default function ChallengeDetail() {
                 <button
                   key={key}
                   onClick={() => setActiveCategory(activeCategory === key ? null : key)}
-                  className={`text-xs px-2 py-1 rounded-md border transition-colors cursor-pointer ${
+                  className={`text-xs px-2.5 py-1 rounded-md border transition-all cursor-pointer ${
                     activeCategory === key
-                      ? 'border-opacity-40 text-opacity-100'
-                      : 'bg-transparent border-gcp-border text-gcp-muted hover:text-gcp-text'
+                      ? ''
+                      : 'bg-transparent border-nebula-border text-nebula-muted hover:text-nebula-text'
                   }`}
-                  style={activeCategory === key ? { backgroundColor: cat.color + '15', borderColor: cat.color + '40', color: cat.color } : {}}
+                  style={activeCategory === key ? { backgroundColor: cat.color + '12', borderColor: cat.color + '30', color: cat.color, fontFamily: 'JetBrains Mono, monospace' } : { fontFamily: 'JetBrains Mono, monospace' }}
                   aria-pressed={activeCategory === key}
                 >
                   {cat.label}
@@ -186,11 +202,11 @@ export default function ChallengeDetail() {
 
             {/* Service grid */}
             {filteredServices.length === 0 ? (
-              <div className="text-center py-8 text-gcp-muted text-sm">
+              <div className="text-center py-8 text-nebula-muted text-sm">
                 No services match your search.
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 max-h-80 overflow-y-auto pr-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-80 overflow-y-auto pr-1">
                 {filteredServices.map((service) => {
                   const isSelected = selectedServices.some((s) => s.id === service.id)
                   return (
@@ -198,40 +214,45 @@ export default function ChallengeDetail() {
                       key={service.id}
                       onClick={() => isSelected ? removeService(service.id) : addService(service)}
                       disabled={submitted}
-                      className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-left text-sm transition-all cursor-pointer ${
+                      className={`flex items-center gap-2 px-3 py-2.5 rounded-lg border text-left text-sm transition-all cursor-pointer ${
                         isSelected
-                          ? 'bg-gcp-blue/10 border-gcp-blue/40 text-gcp-text'
-                          : 'bg-gcp-darker border-gcp-border text-gcp-muted hover:border-gcp-blue/30 hover:text-gcp-text'
-                      } ${submitted ? 'opacity-60 cursor-default' : ''}`}
+                          ? 'bg-neon-cyan/8 border-neon-cyan/30 text-nebula-text'
+                          : 'bg-nebula-deep/40 border-nebula-border text-nebula-muted hover:border-neon-cyan/20 hover:text-nebula-text'
+                      } ${submitted ? 'opacity-50 cursor-default' : ''}`}
                       aria-pressed={isSelected}
                       aria-label={`${service.name}: ${service.description}`}
                     >
                       {isSelected ? (
-                        <CheckCircle2 className="w-4 h-4 text-gcp-blue shrink-0" aria-hidden="true" />
+                        <CheckCircle2 className="w-4 h-4 text-neon-cyan shrink-0" aria-hidden="true" />
                       ) : (
-                        <Plus className="w-4 h-4 shrink-0" aria-hidden="true" />
+                        <Plus className="w-4 h-4 shrink-0 text-nebula-dim" aria-hidden="true" />
                       )}
                       <div className="flex-1 min-w-0">
                         <div className="truncate font-medium">{service.name}</div>
-                        <div className="truncate text-xs opacity-60">{service.description}</div>
+                        <div className="truncate text-xs opacity-50">{service.description}</div>
                       </div>
                     </button>
                   )
                 })}
               </div>
             )}
-          </div>
+          </motion.div>
         </div>
 
         {/* Selected services & results */}
         <div className="space-y-4">
-          <div className="bg-gcp-card border border-gcp-border rounded-2xl p-4">
-            <h3 className="text-sm font-semibold text-gcp-text mb-3">
-              Your Architecture ({selectedServices.length} service{selectedServices.length !== 1 ? 's' : ''})
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15 }}
+            className="glass-card-static rounded-2xl p-5"
+          >
+            <h3 className="text-sm font-bold text-nebula-text mb-3" style={{ fontFamily: 'Syne, system-ui, sans-serif' }}>
+              Your Architecture <span className="text-nebula-muted font-normal" style={{ fontFamily: 'JetBrains Mono, monospace' }}>({selectedServices.length})</span>
             </h3>
 
             {selectedServices.length === 0 ? (
-              <p className="text-xs text-gcp-muted text-center py-4">
+              <p className="text-xs text-nebula-dim text-center py-5">
                 Select GCP services from the left to build your architecture
               </p>
             ) : (
@@ -241,14 +262,14 @@ export default function ChallengeDetail() {
                   return (
                     <div
                       key={service.id}
-                      className="flex items-center gap-2 px-2 py-1.5 bg-gcp-darker rounded-lg text-sm canvas-fade-in"
+                      className="flex items-center gap-2 px-2.5 py-2 bg-nebula-deep/40 rounded-lg text-sm border border-nebula-border canvas-fade-in"
                     >
                       <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: cat?.color }} />
-                      <span className="flex-1 text-gcp-text truncate">{service.name}</span>
+                      <span className="flex-1 text-nebula-text truncate text-xs">{service.name}</span>
                       {!submitted && (
                         <button
                           onClick={() => removeService(service.id)}
-                          className="text-gcp-muted hover:text-gcp-red bg-transparent border-0 cursor-pointer p-0"
+                          className="text-nebula-dim hover:text-neon-rose bg-transparent border-0 cursor-pointer p-0 transition-colors"
                           aria-label={`Remove ${service.name}`}
                         >
                           <X className="w-3.5 h-3.5" />
@@ -264,18 +285,17 @@ export default function ChallengeDetail() {
               <button
                 onClick={handleSubmit}
                 disabled={selectedServices.length === 0}
-                className="w-full py-2 bg-gcp-green rounded-lg text-white text-sm font-medium hover:bg-gcp-green/80 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer border-0"
+                className="w-full py-2.5 btn-neon rounded-lg text-white text-sm font-semibold disabled:opacity-30 disabled:cursor-not-allowed"
+                style={selectedServices.length === 0 ? { background: 'rgba(99, 102, 241, 0.2)' } : {}}
               >
                 Submit Design
               </button>
             ) : (
               <div className="space-y-3 score-reveal">
-                <div className="text-center py-3 bg-gcp-darker rounded-xl">
-                  <div className="relative inline-block">
-                    <ScoreRing score={score} maxScore={challenge.maxScore} size={100} />
-                  </div>
+                <div className="text-center py-4 bg-nebula-deep/40 rounded-xl border border-nebula-border">
+                  <ScoreRing score={score} maxScore={challenge.maxScore} size={100} />
                   {percentage >= 90 && (
-                    <div className="flex items-center justify-center gap-1 mt-1 text-gcp-green text-xs">
+                    <div className="flex items-center justify-center gap-1 mt-2 text-neon-emerald text-xs">
                       <Sparkles className="w-3 h-3" />
                       Excellent design!
                     </div>
@@ -283,28 +303,34 @@ export default function ChallengeDetail() {
                 </div>
 
                 {results.map((r, idx) => (
-                  <div key={r.id} className="flex items-start gap-2 text-xs list-item-enter" style={{ animationDelay: `${idx * 50}ms` }}>
+                  <motion.div
+                    key={r.id}
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.05 }}
+                    className="flex items-start gap-2 text-xs"
+                  >
                     {r.met ? (
-                      <CheckCircle2 className="w-4 h-4 text-gcp-green shrink-0" aria-label="Met" />
+                      <CheckCircle2 className="w-4 h-4 text-neon-emerald shrink-0" aria-label="Met" />
                     ) : (
-                      <XCircle className="w-4 h-4 text-gcp-red shrink-0" aria-label="Not met" />
+                      <XCircle className="w-4 h-4 text-neon-rose shrink-0" aria-label="Not met" />
                     )}
-                    <span className={r.met ? 'text-gcp-text' : 'text-gcp-muted'}>
-                      {r.label} <span className="text-gcp-muted">({r.points}pts)</span>
+                    <span className={r.met ? 'text-nebula-text' : 'text-nebula-muted'}>
+                      {r.label} <span className="text-nebula-dim" style={{ fontFamily: 'JetBrains Mono, monospace' }}>({r.points}pts)</span>
                     </span>
-                  </div>
+                  </motion.div>
                 ))}
 
                 <div className="flex gap-2 pt-2">
                   <button
                     onClick={handleReset}
-                    className="flex-1 flex items-center justify-center gap-1 py-2 bg-gcp-darker border border-gcp-border rounded-lg text-gcp-text text-xs hover:bg-gcp-border transition-colors cursor-pointer"
+                    className="flex-1 flex items-center justify-center gap-1 py-2 bg-nebula-deep/40 border border-nebula-border rounded-lg text-nebula-text text-xs hover:bg-nebula-elevated/50 transition-colors cursor-pointer"
                   >
                     <RotateCcw className="w-3 h-3" /> Reset
                   </button>
                   <button
                     onClick={() => setShowSolution(!showSolution)}
-                    className="flex-1 flex items-center justify-center gap-1 py-2 bg-gcp-darker border border-gcp-border rounded-lg text-gcp-text text-xs hover:bg-gcp-border transition-colors cursor-pointer"
+                    className="flex-1 flex items-center justify-center gap-1 py-2 bg-nebula-deep/40 border border-nebula-border rounded-lg text-nebula-text text-xs hover:bg-nebula-elevated/50 transition-colors cursor-pointer"
                     aria-expanded={showSolution}
                   >
                     {showSolution ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
@@ -315,19 +341,24 @@ export default function ChallengeDetail() {
                 {nextChallenge && (
                   <Link
                     to={`/challenges/${nextChallenge.id}`}
-                    className="w-full flex items-center justify-center gap-1 py-2 bg-gcp-blue rounded-lg text-white text-xs no-underline hover:bg-gcp-blue/80 transition-colors"
+                    className="w-full flex items-center justify-center gap-1 py-2.5 btn-neon rounded-lg text-white text-xs no-underline"
                   >
                     Next Challenge <ArrowRight className="w-3 h-3" />
                   </Link>
                 )}
               </div>
             )}
-          </div>
+          </motion.div>
 
           {showSolution && (
-            <div className="bg-gcp-card border border-gcp-green/30 rounded-2xl p-4 slide-down">
-              <h3 className="text-sm font-semibold text-gcp-green mb-2">Sample Solution</h3>
-              <p className="text-xs text-gcp-text leading-relaxed mb-3">
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="glass-card-static rounded-2xl p-5 border-neon-emerald/20"
+              style={{ borderColor: 'rgba(16, 185, 129, 0.2)' }}
+            >
+              <h3 className="text-sm font-bold text-neon-emerald mb-2" style={{ fontFamily: 'Syne, system-ui, sans-serif' }}>Sample Solution</h3>
+              <p className="text-xs text-nebula-text leading-relaxed mb-3">
                 {challenge.sampleSolution.explanation}
               </p>
               <div className="space-y-1">
@@ -336,14 +367,14 @@ export default function ChallengeDetail() {
                   const isInYours = selectedServices.some((s) => s.id === sid)
                   return svc ? (
                     <div key={sid} className="text-xs flex items-center gap-1.5">
-                      <CheckCircle2 className="w-3 h-3 text-gcp-green" aria-hidden="true" />
-                      <span className={isInYours ? 'text-gcp-text' : 'text-gcp-muted'}>{svc.name}</span>
-                      {isInYours && <span className="text-[10px] text-gcp-green">(in your design)</span>}
+                      <CheckCircle2 className="w-3 h-3 text-neon-emerald" aria-hidden="true" />
+                      <span className={isInYours ? 'text-nebula-text' : 'text-nebula-muted'}>{svc.name}</span>
+                      {isInYours && <span className="text-neon-emerald" style={{ fontSize: '10px', fontFamily: 'JetBrains Mono, monospace' }}>(in your design)</span>}
                     </div>
                   ) : null
                 })}
               </div>
-            </div>
+            </motion.div>
           )}
         </div>
       </div>

@@ -17,11 +17,10 @@ export default function GcpServiceNode({ service, onDragStart, onClick, compact 
     return (
       <button
         onClick={() => onClick?.(service)}
-        className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gcp-card border border-gcp-border hover:border-opacity-60 text-left transition-all text-sm w-full"
-        style={{ borderColor: category?.color + '40' }}
+        className="flex items-center gap-2 px-3 py-2 rounded-lg bg-nebula-surface/50 border border-nebula-border hover:border-nebula-border-bright text-left transition-all text-sm w-full group"
       >
-        <Icon className="w-4 h-4 shrink-0" style={{ color: category?.color }} />
-        <span className="text-gcp-text truncate">{service.name}</span>
+        <Icon className="w-4 h-4 shrink-0 transition-colors" style={{ color: category?.color }} />
+        <span className="text-nebula-text truncate group-hover:text-white transition-colors">{service.name}</span>
       </button>
     )
   }
@@ -33,16 +32,16 @@ export default function GcpServiceNode({ service, onDragStart, onClick, compact 
         e.dataTransfer.setData('service', JSON.stringify(service))
         onDragStart?.(service)
       }}
-      className="gcp-node flex flex-col items-center gap-2 p-4 rounded-xl bg-gcp-card border border-gcp-border w-32 text-center"
-      style={{ borderColor: category?.color + '60' }}
+      className="gcp-node flex flex-col items-center gap-2 p-4 rounded-xl glass-card-static w-32 text-center"
+      style={{ borderColor: category?.color + '30' }}
     >
       <div
         className="w-10 h-10 rounded-lg flex items-center justify-center"
-        style={{ backgroundColor: category?.color + '20' }}
+        style={{ backgroundColor: category?.color + '15' }}
       >
         <Icon className="w-5 h-5" style={{ color: category?.color }} />
       </div>
-      <span className="text-xs font-medium text-gcp-text leading-tight">
+      <span className="text-xs font-medium text-nebula-text leading-tight">
         {service.name}
       </span>
     </div>
