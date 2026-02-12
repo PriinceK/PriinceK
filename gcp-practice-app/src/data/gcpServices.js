@@ -1,0 +1,92 @@
+export const GCP_SERVICE_CATEGORIES = {
+  compute: {
+    label: 'Compute',
+    color: '#4285f4',
+    icon: 'Server',
+  },
+  storage: {
+    label: 'Storage & Databases',
+    color: '#34a853',
+    icon: 'Database',
+  },
+  networking: {
+    label: 'Networking',
+    color: '#ea4335',
+    icon: 'Network',
+  },
+  security: {
+    label: 'Security & Identity',
+    color: '#fbbc04',
+    icon: 'Shield',
+  },
+  data: {
+    label: 'Data Analytics',
+    color: '#9c27b0',
+    icon: 'BarChart3',
+  },
+  ai: {
+    label: 'AI & ML',
+    color: '#ff6d00',
+    icon: 'Brain',
+  },
+  devops: {
+    label: 'DevOps & CI/CD',
+    color: '#00bcd4',
+    icon: 'GitBranch',
+  },
+  serverless: {
+    label: 'Serverless',
+    color: '#e91e63',
+    icon: 'Zap',
+  },
+}
+
+export const GCP_SERVICES = [
+  // Compute
+  { id: 'compute-engine', name: 'Compute Engine', category: 'compute', description: 'Virtual machines running on Google infrastructure' },
+  { id: 'gke', name: 'Google Kubernetes Engine', category: 'compute', description: 'Managed Kubernetes cluster service' },
+  { id: 'app-engine', name: 'App Engine', category: 'compute', description: 'Fully managed serverless application platform' },
+  { id: 'cloud-run', name: 'Cloud Run', category: 'serverless', description: 'Run stateless containers on a fully managed environment' },
+  { id: 'cloud-functions', name: 'Cloud Functions', category: 'serverless', description: 'Event-driven serverless compute platform' },
+
+  // Storage & Databases
+  { id: 'cloud-storage', name: 'Cloud Storage', category: 'storage', description: 'Object storage for unstructured data' },
+  { id: 'cloud-sql', name: 'Cloud SQL', category: 'storage', description: 'Managed relational database service (MySQL, PostgreSQL, SQL Server)' },
+  { id: 'firestore', name: 'Firestore', category: 'storage', description: 'NoSQL document database for mobile, web, and server' },
+  { id: 'bigtable', name: 'Cloud Bigtable', category: 'storage', description: 'Wide-column NoSQL database for large analytical workloads' },
+  { id: 'spanner', name: 'Cloud Spanner', category: 'storage', description: 'Globally distributed, horizontally scalable relational database' },
+  { id: 'memorystore', name: 'Memorystore', category: 'storage', description: 'Managed in-memory data store (Redis, Memcached)' },
+
+  // Networking
+  { id: 'vpc', name: 'Virtual Private Cloud', category: 'networking', description: 'Global virtual network for GCP resources' },
+  { id: 'cloud-load-balancing', name: 'Cloud Load Balancing', category: 'networking', description: 'High-performance, scalable load balancing' },
+  { id: 'cloud-cdn', name: 'Cloud CDN', category: 'networking', description: 'Content delivery network for low-latency content delivery' },
+  { id: 'cloud-dns', name: 'Cloud DNS', category: 'networking', description: 'Scalable, reliable, managed DNS service' },
+  { id: 'cloud-armor', name: 'Cloud Armor', category: 'networking', description: 'DDoS protection and WAF service' },
+  { id: 'cloud-nat', name: 'Cloud NAT', category: 'networking', description: 'Network address translation for private instances' },
+
+  // Security & Identity
+  { id: 'iam', name: 'Cloud IAM', category: 'security', description: 'Identity and Access Management' },
+  { id: 'kms', name: 'Cloud KMS', category: 'security', description: 'Key Management Service for encryption keys' },
+  { id: 'secret-manager', name: 'Secret Manager', category: 'security', description: 'Store and manage sensitive data' },
+  { id: 'security-command-center', name: 'Security Command Center', category: 'security', description: 'Security and risk management platform' },
+
+  // Data Analytics
+  { id: 'bigquery', name: 'BigQuery', category: 'data', description: 'Serverless, multicloud data warehouse' },
+  { id: 'dataflow', name: 'Dataflow', category: 'data', description: 'Unified stream and batch data processing' },
+  { id: 'dataproc', name: 'Dataproc', category: 'data', description: 'Managed Spark and Hadoop service' },
+  { id: 'pub-sub', name: 'Pub/Sub', category: 'data', description: 'Global real-time messaging service' },
+  { id: 'composer', name: 'Cloud Composer', category: 'data', description: 'Managed Apache Airflow workflow orchestration' },
+
+  // AI & ML
+  { id: 'vertex-ai', name: 'Vertex AI', category: 'ai', description: 'Unified ML platform for building and deploying models' },
+  { id: 'vision-ai', name: 'Vision AI', category: 'ai', description: 'Image analysis with pre-trained models' },
+  { id: 'natural-language', name: 'Natural Language AI', category: 'ai', description: 'Text analysis and understanding' },
+
+  // DevOps
+  { id: 'cloud-build', name: 'Cloud Build', category: 'devops', description: 'Serverless CI/CD platform' },
+  { id: 'artifact-registry', name: 'Artifact Registry', category: 'devops', description: 'Universal package manager for build artifacts' },
+  { id: 'cloud-deploy', name: 'Cloud Deploy', category: 'devops', description: 'Managed continuous delivery to GKE and Cloud Run' },
+  { id: 'cloud-monitoring', name: 'Cloud Monitoring', category: 'devops', description: 'Infrastructure and application monitoring' },
+  { id: 'cloud-logging', name: 'Cloud Logging', category: 'devops', description: 'Real-time log management and analysis' },
+]
