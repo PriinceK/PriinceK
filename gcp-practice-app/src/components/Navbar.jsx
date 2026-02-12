@@ -12,11 +12,11 @@ export default function Navbar() {
   const location = useLocation()
 
   return (
-    <nav className="bg-gcp-dark border-b border-gcp-border sticky top-0 z-50">
+    <nav className="bg-gcp-dark border-b border-gcp-border sticky top-0 z-50" role="navigation" aria-label="Main navigation">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center gap-2 no-underline">
-            <Cloud className="w-8 h-8 text-gcp-blue" />
+          <Link to="/" className="flex items-center gap-2 no-underline" aria-label="GCP Architect Lab - Home">
+            <Cloud className="w-8 h-8 text-gcp-blue" aria-hidden="true" />
             <span className="text-lg font-bold text-gcp-text">
               GCP <span className="text-gcp-blue">Architect Lab</span>
             </span>
@@ -35,8 +35,10 @@ export default function Navbar() {
                       ? 'bg-gcp-blue/15 text-gcp-blue'
                       : 'text-gcp-muted hover:text-gcp-text hover:bg-gcp-card'
                   }`}
+                  aria-current={active ? 'page' : undefined}
+                  aria-label={label}
                 >
-                  <Icon className="w-4 h-4" />
+                  <Icon className="w-4 h-4" aria-hidden="true" />
                   <span className="hidden sm:inline">{label}</span>
                 </Link>
               )

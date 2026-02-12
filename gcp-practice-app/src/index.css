@@ -10,7 +10,7 @@
   --color-gcp-card: #1e1e3a;
   --color-gcp-border: #2a2a4a;
   --color-gcp-text: #e0e0f0;
-  --color-gcp-muted: #8888aa;
+  --color-gcp-muted: #9a9abe;
 }
 
 body {
@@ -20,16 +20,18 @@ body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
+/* Architecture canvas dot grid */
 .architecture-canvas {
   background-image:
     radial-gradient(circle, var(--color-gcp-border) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
+/* Canvas node interactions */
 .gcp-node {
   cursor: grab;
   user-select: none;
-  transition: box-shadow 0.2s;
+  transition: box-shadow 0.2s, transform 0.15s;
 }
 
 .gcp-node:active {
@@ -40,6 +42,124 @@ body {
   box-shadow: 0 0 16px rgba(66, 133, 244, 0.4);
 }
 
+/* Animated connection lines */
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+.connection-line {
+  animation: dash-flow 1s linear infinite;
+}
+
+/* Canvas element entrance animation */
+@keyframes canvas-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.canvas-fade-in {
+  animation: canvas-fade-in 0.2s ease-out;
+}
+
+/* Page transition animations */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.page-enter {
+  animation: page-enter 0.3s ease-out;
+}
+
+/* Staggered list item entrance */
+@keyframes list-item-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.list-item-enter {
+  animation: list-item-enter 0.3s ease-out both;
+}
+
+/* Score reveal animation */
+@keyframes score-reveal {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.score-reveal {
+  animation: score-reveal 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Hint slide-down */
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+    transform: translateY(0);
+  }
+}
+.slide-down {
+  animation: slide-down 0.3s ease-out;
+  overflow: hidden;
+}
+
+/* Fade-in utility */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+/* Pulse for active connect state */
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(66, 133, 244, 0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(66, 133, 244, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(66, 133, 244, 0); }
+}
+.pulse-ring {
+  animation: pulse-ring 1.5s infinite;
+}
+
+/* Celebration burst for A+ grade */
+@keyframes celebration {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.celebration {
+  animation: celebration 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -51,11 +171,37 @@ body {
   border-radius: 3px;
 }
 
-@keyframes dash-flow {
+/* Focus ring for keyboard nav */
+:focus-visible {
+  outline: 2px solid var(--color-gcp-blue);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Toast notification */
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
   to {
-    stroke-dashoffset: -20;
+    opacity: 1;
+    transform: translateY(0);
   }
 }
-.connection-line {
-  animation: dash-flow 1s linear infinite;
+@keyframes toast-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+.toast-in {
+  animation: toast-in 0.3s ease-out;
+}
+.toast-out {
+  animation: toast-out 0.3s ease-in forwards;
 }
