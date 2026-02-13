@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Cloud, Calendar, Trophy, Layout, BookOpen, Brain, RotateCcw, GraduationCap, GitCompareArrows, DollarSign, ChevronDown, Terminal, Network, Award, ClipboardList, BarChart3, Wrench } from 'lucide-react'
+import { Cloud, Calendar, Trophy, Layout, BookOpen, Brain, RotateCcw, GraduationCap, GitCompareArrows, DollarSign, ChevronDown, Terminal, Network, Award, ClipboardList, BarChart3, Wrench, StickyNote, Settings } from 'lucide-react'
 import UserMenu from './UserMenu'
+import CommandPalette from './CommandPalette'
 
 const MAIN_NAV = [
   { to: '/', label: 'Dashboard', icon: Cloud },
@@ -24,6 +25,8 @@ const LEARN_ITEMS = [
   { to: '/study-plan', label: 'Study Planner', icon: ClipboardList, color: '#00d4ff' },
   { to: '/analytics', label: 'Analytics', icon: BarChart3, color: '#00d4ff' },
   { to: '/scenario-builder', label: 'Scenario Builder', icon: Wrench, color: '#f59e0b' },
+  { to: '/notes', label: 'Quick Notes', icon: StickyNote, color: '#f59e0b' },
+  { to: '/settings', label: 'Settings', icon: Settings, color: '#94a3b8' },
 ]
 
 const LEARN_PATHS = LEARN_ITEMS.map((i) => i.to)
@@ -131,11 +134,12 @@ export default function Navbar() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 8, scale: 0.96 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute right-0 top-full mt-2 w-56 rounded-xl border border-nebula-border overflow-hidden"
+                    className="absolute right-0 top-full mt-2 w-56 rounded-xl border border-nebula-border overflow-hidden overflow-y-auto"
                     style={{
                       background: 'rgba(6, 9, 24, 0.95)',
                       backdropFilter: 'blur(16px)',
                       WebkitBackdropFilter: 'blur(16px)',
+                      maxHeight: 'calc(100vh - 80px)',
                     }}
                   >
                     {LEARN_ITEMS.map(({ to, label, icon: Icon, color }) => {
@@ -159,6 +163,9 @@ export default function Navbar() {
                 )}
               </AnimatePresence>
             </div>
+
+            {/* Command Palette */}
+            <CommandPalette />
 
             {/* User Menu */}
             <div className="ml-2 pl-2 border-l border-nebula-border">

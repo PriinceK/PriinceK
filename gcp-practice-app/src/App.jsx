@@ -26,6 +26,10 @@ import Achievements from './pages/Achievements'
 import StudyPlanner from './pages/StudyPlanner'
 import Analytics from './pages/Analytics'
 import ScenarioBuilder from './pages/ScenarioBuilder'
+import Notes from './pages/Notes'
+import SettingsPage from './pages/SettingsPage'
+import AchievementToast from './components/AchievementToast'
+import Onboarding from './components/Onboarding'
 
 const pageVariants = {
   initial: { opacity: 0, y: 12 },
@@ -47,6 +51,8 @@ export default function App() {
   return (
     <div className="min-h-screen bg-nebula-deep relative">
       <div className="mesh-bg" />
+      <AchievementToast />
+      <Onboarding />
       <div className="relative z-10">
         <Navbar />
         <AnimatePresence mode="wait">
@@ -75,6 +81,8 @@ export default function App() {
             <Route path="/study-plan" element={<AnimatedPage><StudyPlanner /></AnimatedPage>} />
             <Route path="/analytics" element={<AnimatedPage><Analytics /></AnimatedPage>} />
             <Route path="/scenario-builder" element={<AnimatedPage><ScenarioBuilder /></AnimatedPage>} />
+            <Route path="/notes" element={<AnimatedPage><Notes /></AnimatedPage>} />
+            <Route path="/settings" element={<AnimatedPage><SettingsPage /></AnimatedPage>} />
             <Route path="/login" element={<AnimatedPage><Login /></AnimatedPage>} />
           </Routes>
         </AnimatePresence>

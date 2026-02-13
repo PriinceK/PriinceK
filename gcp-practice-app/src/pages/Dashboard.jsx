@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Calendar, Trophy, Layout, ArrowRight, Cloud, Target, TrendingUp, Sparkles, BookOpen, Brain, RotateCcw, GraduationCap, GitCompareArrows, DollarSign, Flame, Terminal, Network, Award, ClipboardList, BarChart3, Wrench } from 'lucide-react'
+import { Calendar, Trophy, Layout, ArrowRight, Cloud, Target, TrendingUp, Sparkles, BookOpen, Brain, RotateCcw, GraduationCap, GitCompareArrows, DollarSign, Flame, Terminal, Network, Award, ClipboardList, BarChart3, Wrench, StickyNote, Settings } from 'lucide-react'
 import { DAILY_SCENARIOS } from '../data/scenarios'
 import { CHALLENGES } from '../data/challenges'
 import { GCP_SERVICES } from '../data/gcpServices'
@@ -52,6 +52,8 @@ const LEARN_FEATURES = [
   { to: '/study-plan', icon: ClipboardList, color: '#00d4ff', title: 'Study Planner', description: 'Get a personalized daily study plan based on your strengths and weaknesses.' },
   { to: '/analytics', icon: BarChart3, color: '#00d4ff', title: 'Analytics', description: 'Visualize learning trends, domain breakdown, score history, and activity.' },
   { to: '/scenario-builder', icon: Wrench, color: '#f59e0b', title: 'Scenario Builder', description: 'Create, edit, and share your own cloud engineering scenarios.' },
+  { to: '/notes', icon: StickyNote, color: '#f59e0b', title: 'Quick Notes', description: 'Capture study notes, key concepts, and exam tips as you learn.' },
+  { to: '/settings', icon: Settings, color: '#94a3b8', title: 'Settings', description: 'Export/import progress, manage data, and configure preferences.' },
 ]
 
 const TIPS = [
