@@ -7,6 +7,18 @@ import DayAsScenario from './pages/DayAsScenario'
 import ChallengesList from './pages/ChallengesList'
 import ChallengeDetail from './pages/ChallengeDetail'
 import ArchitectureCanvas from './pages/ArchitectureCanvas'
+import KnowledgeMap from './pages/KnowledgeMap'
+import ServiceCatalog from './pages/ServiceCatalog'
+import ServiceDetail from './pages/ServiceDetail'
+import ReviewDashboard from './pages/ReviewDashboard'
+import ReviewSession from './pages/ReviewSession'
+import ExamSetup from './pages/ExamSetup'
+import ExamSession from './pages/ExamSession'
+import ExamResults from './pages/ExamResults'
+import CompareServices from './pages/CompareServices'
+import ComparisonDetail from './pages/ComparisonDetail'
+import CostLabsList from './pages/CostLabsList'
+import CostLabDetail from './pages/CostLabDetail'
 
 const pageVariants = {
   initial: { opacity: 0, y: 12 },
@@ -38,6 +50,18 @@ export default function App() {
             <Route path="/challenges" element={<AnimatedPage><ChallengesList /></AnimatedPage>} />
             <Route path="/challenges/:challengeId" element={<AnimatedPage><ChallengeDetail /></AnimatedPage>} />
             <Route path="/canvas" element={<ArchitectureCanvas />} />
+            <Route path="/knowledge-map" element={<AnimatedPage><KnowledgeMap /></AnimatedPage>} />
+            <Route path="/services" element={<AnimatedPage><ServiceCatalog /></AnimatedPage>} />
+            <Route path="/services/:serviceId" element={<AnimatedPage><ServiceDetail /></AnimatedPage>} />
+            <Route path="/review" element={<AnimatedPage><ReviewDashboard /></AnimatedPage>} />
+            <Route path="/review/session" element={<AnimatedPage><ReviewSession /></AnimatedPage>} />
+            <Route path="/exam" element={<AnimatedPage><ExamSetup /></AnimatedPage>} />
+            <Route path="/exam/session" element={<AnimatedPage><ExamSession /></AnimatedPage>} />
+            <Route path="/exam/results" element={<AnimatedPage><ExamResults /></AnimatedPage>} />
+            <Route path="/compare" element={<AnimatedPage><CompareServices /></AnimatedPage>} />
+            <Route path="/compare/:comparisonId" element={<AnimatedPage><ComparisonDetail /></AnimatedPage>} />
+            <Route path="/cost-labs" element={<AnimatedPage><CostLabsList /></AnimatedPage>} />
+            <Route path="/cost-labs/:labId" element={<AnimatedPage><CostLabDetail /></AnimatedPage>} />
           </Routes>
         </AnimatePresence>
       </div>

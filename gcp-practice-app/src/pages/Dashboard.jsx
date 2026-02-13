@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Calendar, Trophy, Layout, ArrowRight, Cloud, Target, BookOpen, TrendingUp, Sparkles } from 'lucide-react'
+import { Calendar, Trophy, Layout, ArrowRight, Cloud, Target, TrendingUp, Sparkles, BookOpen, Brain, RotateCcw, GraduationCap, GitCompareArrows, DollarSign, Flame } from 'lucide-react'
 import { DAILY_SCENARIOS } from '../data/scenarios'
 import { CHALLENGES } from '../data/challenges'
 import { GCP_SERVICES } from '../data/gcpServices'
+import { getFlashcardState, getStudyStreak, getExamHistory, getDomainScores } from '../utils/progress'
+import { isDueForReview } from '../utils/spacedRepetition'
+import { FLASHCARDS } from '../data/flashcards'
 
 const FEATURES = [
   {
@@ -36,9 +39,18 @@ const FEATURES = [
   },
 ]
 
+const LEARN_FEATURES = [
+  { to: '/services', icon: BookOpen, color: '#00d4ff', title: 'Service Encyclopedia', description: 'Deep-dive into 15+ GCP services with use cases, pricing, gotchas, and quizzes.' },
+  { to: '/knowledge-map', icon: Brain, color: '#7c3aed', title: 'Knowledge Map', description: 'Radar chart showing your proficiency across all GCP domains.' },
+  { to: '/review', icon: RotateCcw, color: '#7c3aed', title: 'Review Cards', description: 'Spaced repetition flashcards to reinforce and retain GCP knowledge.' },
+  { to: '/exam', icon: GraduationCap, color: '#f43f5e', title: 'Exam Simulator', description: 'Timed practice exams modeled after the ACE certification.' },
+  { to: '/compare', icon: GitCompareArrows, color: '#f59e0b', title: 'Compare Services', description: 'Head-to-head comparisons of commonly confused GCP services.' },
+  { to: '/cost-labs', icon: DollarSign, color: '#10b981', title: 'Cost Labs', description: 'Optimize GCP infrastructure costs in interactive lab scenarios.' },
+]
+
 const TIPS = [
   'Cloud Spanner is the only GCP database with synchronous multi-region replication.',
-  'GKE Autopilot manages node provisioning automatically \u2014 you only pay for pods.',
+  'GKE Autopilot manages node provisioning automatically — you only pay for pods.',
   'Cloud Run scales to zero, meaning you pay nothing when idle.',
   'VPC Service Controls create a security perimeter around GCP resources.',
   'Cloud Armor integrates with Global HTTP(S) Load Balancing for DDoS protection.',
@@ -70,9 +82,18 @@ const fadeUp = {
 export default function Dashboard() {
   const tipOfTheDay = TIPS[new Date().getDate() % TIPS.length]
   const [progress, setProgress] = useState(getProgress)
+  const [cardsDue, setCardsDue] = useState(0)
+  const [streak, setStreak] = useState({ current: 0 })
+  const [lastExam, setLastExam] = useState(null)
 
   useEffect(() => {
     setProgress(getProgress())
+    const fcState = getFlashcardState()
+    const due = FLASHCARDS.filter((c) => isDueForReview(fcState[c.id])).length
+    setCardsDue(due)
+    setStreak(getStudyStreak())
+    const history = getExamHistory()
+    if (history.length > 0) setLastExam(history[history.length - 1])
   }, [])
 
   const totalTasks = DAILY_SCENARIOS.reduce((acc, s) => acc + s.tasks.length, 0)
@@ -95,7 +116,7 @@ export default function Dashboard() {
         </motion.h1>
         <motion.p variants={fadeUp} className="text-nebula-muted text-lg max-w-2xl mx-auto leading-relaxed">
           Sharpen your Google Cloud Platform engineering and architecture skills through
-          realistic scenarios, hands-on challenges, and free-form design.
+          realistic scenarios, hands-on challenges, and in-depth learning tools.
         </motion.p>
       </motion.div>
 
@@ -111,7 +132,7 @@ export default function Dashboard() {
             <TrendingUp className="w-4 h-4 text-neon-cyan" aria-hidden="true" />
             <h3 className="text-sm font-semibold text-nebula-text">Your Progress</h3>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
             <div>
               <div className="text-2xl font-bold text-nebula-text" style={{ fontFamily: 'JetBrains Mono, monospace' }}>{progress.scenariosCompleted}/{DAILY_SCENARIOS.length}</div>
               <div className="text-xs text-nebula-muted mt-0.5">Scenarios completed</div>
@@ -126,17 +147,22 @@ export default function Dashboard() {
                 <div className="text-xs text-nebula-muted mt-0.5">Best scenario score</div>
               </div>
             )}
-            {progress.bestChallengeScore > 0 && (
-              <div>
-                <div className="text-2xl font-bold text-neon-emerald" style={{ fontFamily: 'JetBrains Mono, monospace' }}>{progress.bestChallengeScore}%</div>
-                <div className="text-xs text-nebula-muted mt-0.5">Best challenge score</div>
+            <div>
+              <div className="text-2xl font-bold text-neon-amber" style={{ fontFamily: 'JetBrains Mono, monospace' }}>{cardsDue}</div>
+              <div className="text-xs text-nebula-muted mt-0.5">Cards due today</div>
+            </div>
+            <div>
+              <div className="flex items-center gap-1">
+                <Flame className="w-4 h-4 text-neon-amber" />
+                <span className="text-2xl font-bold text-nebula-text" style={{ fontFamily: 'JetBrains Mono, monospace' }}>{streak.current}</span>
               </div>
-            )}
+              <div className="text-xs text-nebula-muted mt-0.5">Day streak</div>
+            </div>
           </div>
         </motion.div>
       )}
 
-      {/* Features */}
+      {/* Practice Features */}
       <motion.div
         className="grid md:grid-cols-3 gap-6 mb-14"
         variants={stagger}
@@ -170,6 +196,40 @@ export default function Dashboard() {
             </Link>
           </motion.div>
         ))}
+      </motion.div>
+
+      {/* Learning Hub */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="mb-14"
+      >
+        <div className="flex items-center gap-2 mb-6">
+          <BookOpen className="w-5 h-5 text-neon-cyan" />
+          <h2 className="text-xl font-bold text-nebula-text" style={{ fontFamily: 'Syne, system-ui, sans-serif' }}>Learning Hub</h2>
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {LEARN_FEATURES.map(({ to, icon: Icon, color, title, description }) => (
+            <Link
+              key={to}
+              to={to}
+              className="group glass-card rounded-xl p-5 no-underline hover:-translate-y-0.5 transition-all duration-200 flex items-start gap-4"
+            >
+              <div
+                className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+                style={{ backgroundColor: color + '10', border: `1px solid ${color}20` }}
+              >
+                <Icon className="w-5 h-5" style={{ color }} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="text-sm font-bold text-nebula-text mb-1" style={{ fontFamily: 'Syne, system-ui, sans-serif' }}>{title}</h3>
+                <p className="text-xs text-nebula-muted leading-relaxed line-clamp-2">{description}</p>
+              </div>
+              <ArrowRight className="w-4 h-4 text-nebula-dim group-hover:text-neon-cyan group-hover:translate-x-0.5 transition-all shrink-0 mt-1" />
+            </Link>
+          ))}
+        </div>
       </motion.div>
 
       {/* Tip of the Day */}
