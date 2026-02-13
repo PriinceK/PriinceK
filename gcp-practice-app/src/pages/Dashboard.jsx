@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Calendar, Trophy, Layout, ArrowRight, Cloud, Target, TrendingUp, Sparkles, BookOpen, Brain, RotateCcw, GraduationCap, GitCompareArrows, DollarSign, Flame } from 'lucide-react'
+import { Calendar, Trophy, Layout, ArrowRight, Cloud, Target, TrendingUp, Sparkles, BookOpen, Brain, RotateCcw, GraduationCap, GitCompareArrows, DollarSign, Flame, Terminal, Network } from 'lucide-react'
 import { DAILY_SCENARIOS } from '../data/scenarios'
 import { CHALLENGES } from '../data/challenges'
 import { GCP_SERVICES } from '../data/gcpServices'
@@ -46,6 +46,8 @@ const LEARN_FEATURES = [
   { to: '/exam', icon: GraduationCap, color: '#f43f5e', title: 'Exam Simulator', description: 'Timed practice exams modeled after the ACE certification.' },
   { to: '/compare', icon: GitCompareArrows, color: '#f59e0b', title: 'Compare Services', description: 'Head-to-head comparisons of commonly confused GCP services.' },
   { to: '/cost-labs', icon: DollarSign, color: '#10b981', title: 'Cost Labs', description: 'Optimize GCP infrastructure costs in interactive lab scenarios.' },
+  { to: '/linux-lab', icon: Terminal, color: '#10b981', title: 'Linux Fundamentals', description: 'Master Linux commands in an interactive terminal with 30+ guided missions.' },
+  { to: '/network-lab', icon: Network, color: '#a855f7', title: 'Networking Lab', description: 'Learn networking with hands-on DNS, firewall, and diagnostics exercises.' },
 ]
 
 const TIPS = [

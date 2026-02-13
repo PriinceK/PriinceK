@@ -19,6 +19,8 @@ import CompareServices from './pages/CompareServices'
 import ComparisonDetail from './pages/ComparisonDetail'
 import CostLabsList from './pages/CostLabsList'
 import CostLabDetail from './pages/CostLabDetail'
+import LinuxLab from './pages/LinuxLab'
+import NetworkLab from './pages/NetworkLab'
 
 const pageVariants = {
   initial: { opacity: 0, y: 12 },
@@ -62,6 +64,8 @@ export default function App() {
             <Route path="/compare/:comparisonId" element={<AnimatedPage><ComparisonDetail /></AnimatedPage>} />
             <Route path="/cost-labs" element={<AnimatedPage><CostLabsList /></AnimatedPage>} />
             <Route path="/cost-labs/:labId" element={<AnimatedPage><CostLabDetail /></AnimatedPage>} />
+            <Route path="/linux-lab" element={<LinuxLab />} />
+            <Route path="/network-lab" element={<NetworkLab />} />
           </Routes>
         </AnimatePresence>
       </div>
