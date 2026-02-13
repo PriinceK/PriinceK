@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Calendar, Trophy, Layout, ArrowRight, Cloud, Target, TrendingUp, Sparkles, BookOpen, Brain, RotateCcw, GraduationCap, GitCompareArrows, DollarSign, Flame, Terminal, Network } from 'lucide-react'
+import { Calendar, Trophy, Layout, ArrowRight, Cloud, Target, TrendingUp, Sparkles, BookOpen, Brain, RotateCcw, GraduationCap, GitCompareArrows, DollarSign, Flame, Terminal, Network, Award, ClipboardList, BarChart3, Wrench } from 'lucide-react'
 import { DAILY_SCENARIOS } from '../data/scenarios'
 import { CHALLENGES } from '../data/challenges'
 import { GCP_SERVICES } from '../data/gcpServices'
@@ -48,6 +48,10 @@ const LEARN_FEATURES = [
   { to: '/cost-labs', icon: DollarSign, color: '#10b981', title: 'Cost Labs', description: 'Optimize GCP infrastructure costs in interactive lab scenarios.' },
   { to: '/linux-lab', icon: Terminal, color: '#10b981', title: 'Linux Fundamentals', description: 'Master Linux commands in an interactive terminal with 30+ guided missions.' },
   { to: '/network-lab', icon: Network, color: '#a855f7', title: 'Networking Lab', description: 'Learn networking with hands-on DNS, firewall, and diagnostics exercises.' },
+  { to: '/achievements', icon: Award, color: '#f59e0b', title: 'Achievements', description: 'Earn 35+ badges and track your mastery milestones across all activities.' },
+  { to: '/study-plan', icon: ClipboardList, color: '#00d4ff', title: 'Study Planner', description: 'Get a personalized daily study plan based on your strengths and weaknesses.' },
+  { to: '/analytics', icon: BarChart3, color: '#00d4ff', title: 'Analytics', description: 'Visualize learning trends, domain breakdown, score history, and activity.' },
+  { to: '/scenario-builder', icon: Wrench, color: '#f59e0b', title: 'Scenario Builder', description: 'Create, edit, and share your own cloud engineering scenarios.' },
 ]
 
 const TIPS = [

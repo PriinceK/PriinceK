@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Cloud, Calendar, Trophy, Layout, BookOpen, Brain, RotateCcw, GraduationCap, GitCompareArrows, DollarSign, ChevronDown, Terminal, Network } from 'lucide-react'
+import { Cloud, Calendar, Trophy, Layout, BookOpen, Brain, RotateCcw, GraduationCap, GitCompareArrows, DollarSign, ChevronDown, Terminal, Network, Award, ClipboardList, BarChart3, Wrench } from 'lucide-react'
 import UserMenu from './UserMenu'
 
 const MAIN_NAV = [
@@ -20,6 +20,10 @@ const LEARN_ITEMS = [
   { to: '/cost-labs', label: 'Cost Labs', icon: DollarSign, color: '#10b981' },
   { to: '/linux-lab', label: 'Linux Fundamentals', icon: Terminal, color: '#10b981' },
   { to: '/network-lab', label: 'Networking Lab', icon: Network, color: '#a855f7' },
+  { to: '/achievements', label: 'Achievements', icon: Award, color: '#f59e0b' },
+  { to: '/study-plan', label: 'Study Planner', icon: ClipboardList, color: '#00d4ff' },
+  { to: '/analytics', label: 'Analytics', icon: BarChart3, color: '#00d4ff' },
+  { to: '/scenario-builder', label: 'Scenario Builder', icon: Wrench, color: '#f59e0b' },
 ]
 
 const LEARN_PATHS = LEARN_ITEMS.map((i) => i.to)

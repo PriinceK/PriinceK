@@ -121,3 +121,75 @@ export function recordStudyActivity() {
   save(data)
   return data.streak
 }
+
+// Achievement tracking
+export function getAchievements() {
+  return load().achievements || {}
+}
+
+export function unlockAchievement(achievementId) {
+  const data = load()
+  if (!data.achievements) data.achievements = {}
+  if (!data.achievements[achievementId]) {
+    data.achievements[achievementId] = { unlockedAt: Date.now() }
+    save(data)
+    return true
+  }
+  return false
+}
+
+export async function runAchievementCheck() {
+  const { checkAchievements } = await import('../data/achievements')
+  const data = load()
+  const newlyUnlocked = checkAchievements(data)
+  if (newlyUnlocked.length > 0) {
+    if (!data.achievements) data.achievements = {}
+    for (const a of newlyUnlocked) {
+      data.achievements[a.id] = { unlockedAt: Date.now() }
+    }
+    save(data)
+  }
+  return newlyUnlocked
+}
+
+// Custom scenarios
+export function getCustomScenarios() {
+  return load().customScenarios || []
+}
+
+export function saveCustomScenario(scenario) {
+  const data = load()
+  if (!data.customScenarios) data.customScenarios = []
+  const existing = data.customScenarios.findIndex((s) => s.id === scenario.id)
+  if (existing >= 0) {
+    data.customScenarios[existing] = { ...scenario, updatedAt: Date.now() }
+  } else {
+    data.customScenarios.push({ ...scenario, createdAt: Date.now() })
+  }
+  save(data)
+  return data.customScenarios
+}
+
+export function deleteCustomScenario(scenarioId) {
+  const data = load()
+  if (!data.customScenarios) return []
+  data.customScenarios = data.customScenarios.filter((s) => s.id !== scenarioId)
+  save(data)
+  return data.customScenarios
+}
+
+// Activity log for analytics
+export function logActivity(type, details) {
+  const data = load()
+  if (!data.activityLog) data.activityLog = []
+  data.activityLog.push({ type, ...details, timestamp: Date.now() })
+  // Keep last 500 entries
+  if (data.activityLog.length > 500) {
+    data.activityLog = data.activityLog.slice(-500)
+  }
+  save(data)
+}
+
+export function getActivityLog() {
+  return load().activityLog || []
+}

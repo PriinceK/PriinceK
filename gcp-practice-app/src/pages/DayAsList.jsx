@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Calendar, ArrowRight, Clock, Target, BarChart3, CheckCircle2, Filter } from 'lucide-react'
+import { Calendar, ArrowRight, Clock, Target, BarChart3, CheckCircle2, Filter, Wrench } from 'lucide-react'
 import { DAILY_SCENARIOS } from '../data/scenarios'
+import { getCustomScenarios } from '../utils/progress'
 
 const DIFFICULTY_COLORS = {
   Beginner: '#10b981',
@@ -30,14 +31,17 @@ const fadeUp = {
 export default function DayAsList() {
   const [filterDifficulty, setFilterDifficulty] = useState('All')
   const [completedScenarios, setCompletedScenarios] = useState({})
+  const [customScenarios, setCustomScenarios] = useState([])
 
   useEffect(() => {
     setCompletedScenarios(getCompletedScenarios())
+    setCustomScenarios(getCustomScenarios())
   }, [])
 
+  const allScenarios = [...DAILY_SCENARIOS, ...customScenarios]
   const filtered = filterDifficulty === 'All'
-    ? DAILY_SCENARIOS
-    : DAILY_SCENARIOS.filter((s) => s.difficulty === filterDifficulty)
+    ? allScenarios
+    : allScenarios.filter((s) => s.difficulty === filterDifficulty)
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-10">
@@ -101,7 +105,13 @@ export default function DayAsList() {
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2.5">
-                        <span className="text-xs text-nebula-dim" style={{ fontFamily: 'JetBrains Mono, monospace' }}>DAY {DAILY_SCENARIOS.indexOf(scenario) + 1}</span>
+                        <span className="text-xs text-nebula-dim" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                          {scenario.isCustom ? (
+                            <span className="flex items-center gap-1"><Wrench className="w-3 h-3" />CUSTOM</span>
+                          ) : (
+                            `DAY ${DAILY_SCENARIOS.indexOf(scenario) + 1}`
+                          )}
+                        </span>
                         <span
                           className="text-xs font-medium px-2 py-0.5 rounded-full"
                           style={{ backgroundColor: diffColor + '12', color: diffColor, border: `1px solid ${diffColor}20`, fontFamily: 'JetBrains Mono, monospace' }}

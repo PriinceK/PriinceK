@@ -6,6 +6,7 @@ import {
   Briefcase, Building2, AlertTriangle, RotateCcw, Sparkles
 } from 'lucide-react'
 import { DAILY_SCENARIOS } from '../data/scenarios'
+import { getCustomScenarios } from '../utils/progress'
 import ScoreRing from '../components/ScoreRing'
 
 function saveProgress(scenarioId, score, maxScore) {
@@ -30,7 +31,7 @@ const fadeUp = {
 
 export default function DayAsScenario() {
   const { scenarioId } = useParams()
-  const scenario = DAILY_SCENARIOS.find((s) => s.id === scenarioId)
+  const scenario = DAILY_SCENARIOS.find((s) => s.id === scenarioId) || getCustomScenarios().find((s) => s.id === scenarioId)
 
   const [currentTaskIndex, setCurrentTaskIndex] = useState(-1)
   const [answers, setAnswers] = useState({})
