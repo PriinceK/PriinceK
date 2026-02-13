@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Cloud, Calendar, Trophy, Layout, BookOpen, Brain, RotateCcw, GraduationCap, GitCompareArrows, DollarSign, ChevronDown } from 'lucide-react'
+import { Cloud, Calendar, Trophy, Layout, BookOpen, Brain, RotateCcw, GraduationCap, GitCompareArrows, DollarSign, ChevronDown, Terminal, Network } from 'lucide-react'
+import UserMenu from './UserMenu'
 
 const MAIN_NAV = [
   { to: '/', label: 'Dashboard', icon: Cloud },
@@ -17,6 +18,8 @@ const LEARN_ITEMS = [
   { to: '/exam', label: 'Exam Simulator', icon: GraduationCap, color: '#f43f5e' },
   { to: '/compare', label: 'Compare Services', icon: GitCompareArrows, color: '#f59e0b' },
   { to: '/cost-labs', label: 'Cost Labs', icon: DollarSign, color: '#10b981' },
+  { to: '/linux-lab', label: 'Linux Fundamentals', icon: Terminal, color: '#10b981' },
+  { to: '/network-lab', label: 'Networking Lab', icon: Network, color: '#a855f7' },
 ]
 
 const LEARN_PATHS = LEARN_ITEMS.map((i) => i.to)
@@ -151,6 +154,11 @@ export default function Navbar() {
                   </motion.div>
                 )}
               </AnimatePresence>
+            </div>
+
+            {/* User Menu */}
+            <div className="ml-2 pl-2 border-l border-nebula-border">
+              <UserMenu />
             </div>
           </div>
         </div>

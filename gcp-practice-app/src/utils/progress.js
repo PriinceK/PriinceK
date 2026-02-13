@@ -1,3 +1,6 @@
+import { debouncedSync } from './cloudProgress'
+import { auth, isConfigured } from '../config/firebase'
+
 const STORAGE_KEY = 'gcp-lab-progress'
 
 function load() {
@@ -10,6 +13,10 @@ function load() {
 
 function save(data) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+  // Auto-sync to cloud if user is logged in
+  if (isConfigured && auth?.currentUser) {
+    debouncedSync(auth.currentUser.uid)
+  }
 }
 
 export function getProgress() {

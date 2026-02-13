@@ -21,6 +21,7 @@ import CostLabsList from './pages/CostLabsList'
 import CostLabDetail from './pages/CostLabDetail'
 import LinuxLab from './pages/LinuxLab'
 import NetworkLab from './pages/NetworkLab'
+import Login from './pages/Login'
 
 const pageVariants = {
   initial: { opacity: 0, y: 12 },
@@ -66,6 +67,7 @@ export default function App() {
             <Route path="/cost-labs/:labId" element={<AnimatedPage><CostLabDetail /></AnimatedPage>} />
             <Route path="/linux-lab" element={<LinuxLab />} />
             <Route path="/network-lab" element={<NetworkLab />} />
+            <Route path="/login" element={<AnimatedPage><Login /></AnimatedPage>} />
           </Routes>
         </AnimatePresence>
       </div>
