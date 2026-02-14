@@ -11,7 +11,7 @@ export default function FlipCard({ front, back, className = '' }) {
       onClick={() => setFlipped((f) => !f)}
       role="button"
       tabIndex={0}
-      onKeyDown={(e) => e.key === 'Enter' && setFlipped((f) => !f)}
+      onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), setFlipped((f) => !f))}
       aria-label={flipped ? 'Show question' : 'Show answer'}
     >
       <motion.div
@@ -27,7 +27,7 @@ export default function FlipCard({ front, back, className = '' }) {
         >
           <div className="text-xs text-nebula-dim mb-3 uppercase tracking-wider" style={{ fontFamily: 'JetBrains Mono, monospace' }}>Question</div>
           <p className="text-lg text-nebula-text leading-relaxed font-medium">{front}</p>
-          <div className="text-xs text-nebula-dim mt-4">Click to reveal answer</div>
+          <div className="text-xs text-nebula-dim mt-4">Click or press <kbd className="px-1.5 py-0.5 rounded bg-nebula-surface/60 border border-nebula-border text-[10px]">Space</kbd> to reveal</div>
         </div>
 
         {/* Back */}

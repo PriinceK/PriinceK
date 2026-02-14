@@ -35,8 +35,14 @@ import ArchitectureQuiz from './pages/ArchitectureQuiz'
 import TerraformLab from './pages/TerraformLab'
 import IAMSimulator from './pages/IAMSimulator'
 import TimedDrills from './pages/TimedDrills'
+import LearningPaths from './pages/LearningPaths'
+import CommandCheatSheet from './pages/CommandCheatSheet'
+import DailyChallenge from './pages/DailyChallenge'
+import ExamHistory from './pages/ExamHistory'
 import AchievementToast from './components/AchievementToast'
 import Onboarding from './components/Onboarding'
+import Footer from './components/Footer'
+import ScrollToTop from './components/ScrollToTop'
 
 const pageVariants = {
   initial: { opacity: 0, y: 12 },
@@ -60,6 +66,7 @@ export default function App() {
       <div className="mesh-bg" />
       <AchievementToast />
       <Onboarding />
+      <ScrollToTop />
       <div className="relative z-10">
         <Navbar />
         <AnimatePresence mode="wait">
@@ -97,9 +104,14 @@ export default function App() {
             <Route path="/scenario-builder" element={<AnimatedPage><ScenarioBuilder /></AnimatedPage>} />
             <Route path="/notes" element={<AnimatedPage><Notes /></AnimatedPage>} />
             <Route path="/settings" element={<AnimatedPage><SettingsPage /></AnimatedPage>} />
+            <Route path="/learning-paths" element={<AnimatedPage><LearningPaths /></AnimatedPage>} />
+            <Route path="/cheat-sheet" element={<AnimatedPage><CommandCheatSheet /></AnimatedPage>} />
+            <Route path="/daily-challenge" element={<AnimatedPage><DailyChallenge /></AnimatedPage>} />
+            <Route path="/exam/history" element={<AnimatedPage><ExamHistory /></AnimatedPage>} />
             <Route path="/login" element={<AnimatedPage><Login /></AnimatedPage>} />
           </Routes>
         </AnimatePresence>
+        <Footer />
       </div>
     </div>
   )

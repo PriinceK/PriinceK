@@ -11,7 +11,7 @@ const fadeUp = {
 
 export default function Achievements() {
   const [progress, setProgress] = useState({})
-  const [expandedCat, setExpandedCat] = useState(null)
+  const [expandedCat, setExpandedCat] = useState('all')
   const [justUnlocked, setJustUnlocked] = useState([])
 
   useEffect(() => {
@@ -118,7 +118,7 @@ export default function Achievements() {
         {ACHIEVEMENT_CATEGORIES.map((cat, idx) => {
           const achievements = groupedAchievements[cat.id] || []
           const stats = categoryStats[cat.id]
-          const isExpanded = expandedCat === cat.id
+          const isExpanded = expandedCat === 'all' || expandedCat === cat.id
           const allUnlocked = stats.unlocked === stats.total
 
           return (
@@ -130,7 +130,7 @@ export default function Achievements() {
               transition={{ delay: 0.15 + idx * 0.05 }}
             >
               <button
-                onClick={() => setExpandedCat(isExpanded ? null : cat.id)}
+                onClick={() => setExpandedCat(isExpanded ? (expandedCat === 'all' ? cat.id + '_closed' : null) : cat.id)}
                 className="w-full flex items-center justify-between p-5 cursor-pointer hover:bg-nebula-surface/30 transition-colors"
               >
                 <div className="flex items-center gap-3">
@@ -184,27 +184,25 @@ export default function Achievements() {
                         return (
                           <motion.div
                             key={achievement.id}
-                            className={`relative rounded-lg p-4 border transition-all ${
-                              isUnlocked
+                            className={`relative rounded-lg p-4 border transition-all ${isUnlocked
                                 ? 'border-neon-cyan/20 bg-neon-cyan/5'
                                 : 'border-nebula-border bg-nebula-surface/20 opacity-60'
-                            } ${isNew ? 'ring-2 ring-neon-amber/50' : ''}`}
+                              } ${isNew ? 'ring-2 ring-neon-amber/50' : ''}`}
                             variants={fadeUp}
                             initial="initial"
                             animate="animate"
                           >
                             <div className="flex items-start gap-3">
                               <div
-                                className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${
-                                  isUnlocked ? '' : 'grayscale'
-                                }`}
+                                className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${isUnlocked ? '' : 'grayscale'}`}
                                 style={{
                                   backgroundColor: isUnlocked ? cat.color + '15' : 'rgba(255,255,255,0.05)',
                                   border: `1px solid ${isUnlocked ? cat.color + '30' : 'rgba(255,255,255,0.1)'}`,
+                                  ...(isUnlocked ? { boxShadow: `0 0 20px ${cat.color}25` } : {}),
                                 }}
                               >
                                 {isUnlocked ? (
-                                  <Icon className="w-5 h-5" style={{ color: cat.color }} />
+                                  <Icon className="w-6 h-6" style={{ color: cat.color }} />
                                 ) : (
                                   <Lock className="w-4 h-4 text-nebula-dim" />
                                 )}

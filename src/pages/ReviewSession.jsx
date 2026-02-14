@@ -106,9 +106,11 @@ export default function ReviewSession() {
         >
           <div
             onClick={() => !flipped && setFlipped(true)}
-            className={`glass-card-static rounded-2xl p-8 min-h-[240px] flex flex-col justify-center items-center text-center cursor-pointer select-none transition-all ${
-              !flipped ? 'hover:scale-[1.01]' : ''
-            }`}
+            onKeyDown={(e) => (e.key === ' ' || e.key === 'Enter') && !flipped && (e.preventDefault(), setFlipped(true))}
+            role="button"
+            tabIndex={0}
+            className={`glass-card-static rounded-2xl p-8 min-h-[240px] flex flex-col justify-center items-center text-center cursor-pointer select-none transition-all ${!flipped ? 'hover:scale-[1.01]' : ''
+              }`}
           >
             {!flipped ? (
               <div>
@@ -116,7 +118,7 @@ export default function ReviewSession() {
                   {currentCard.domain}
                 </div>
                 <p className="text-lg font-medium text-nebula-text leading-relaxed">{currentCard.front}</p>
-                <p className="text-xs text-nebula-dim mt-6">Tap to reveal answer</p>
+                <p className="text-xs text-nebula-dim mt-6">Click or press <kbd className="px-1.5 py-0.5 rounded bg-nebula-surface/60 border border-nebula-border text-[10px]">Space</kbd> to reveal</p>
               </div>
             ) : (
               <motion.div initial={{ opacity: 0, rotateX: 10 }} animate={{ opacity: 1, rotateX: 0 }} transition={{ duration: 0.3 }}>

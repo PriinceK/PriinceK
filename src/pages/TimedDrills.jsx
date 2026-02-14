@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
     ArrowLeft, Timer, Trophy, RotateCcw, Zap, CheckCircle2,
-    XCircle, ChevronRight, Star, Target,
+    XCircle, ChevronRight, Star, Target, TrendingUp, Clock,
 } from 'lucide-react'
+import Confetti from '../components/Confetti'
 
 const DRILL_SETS = [
     {
@@ -84,6 +85,7 @@ export default function TimedDrills() {
     const [progress, setProgress] = useState(getProgress)
     const inputRef = useRef(null)
     const timerRef = useRef(null)
+    const [showConfetti, setShowConfetti] = useState(false)
 
     const set = selectedSet ? DRILL_SETS.find((s) => s.id === selectedSet) : null
     const drill = set ? set.drills[currentDrill] : null
@@ -138,6 +140,10 @@ export default function TimedDrills() {
             const p = getProgress()
             p[selectedSet] = { score: correctCount, total: set.drills.length, bestTime: results.reduce((a, r) => a + r.timeUsed, 0) }
             saveProgress(p); setProgress(p)
+            if (correctCount === set.drills.length) {
+                setShowConfetti(true)
+                setTimeout(() => setShowConfetti(false), 3500)
+            }
         }
     }
 
@@ -145,23 +151,63 @@ export default function TimedDrills() {
         if (selectedSet && results.length === set?.drills.length) {
             const correctCount = results.filter((r) => r.correct).length
             const totalTime = results.reduce((a, r) => a + r.timeUsed, 0)
+            const perfectScore = correctCount === set.drills.length
+            const sortedByTime = [...results].sort((a, b) => a.timeUsed - b.timeUsed)
+            const fastest = sortedByTime[0]
+            const slowest = sortedByTime[sortedByTime.length - 1]
+            const wrongDrills = results.filter((r) => !r.correct)
             return (
-                <div className="max-w-3xl mx-auto px-4 py-10 text-center">
-                    <Trophy className="w-12 h-12 text-neon-amber mx-auto mb-4" />
-                    <h1 className="text-2xl font-extrabold text-nebula-text mb-2" style={{ fontFamily: 'Syne, system-ui, sans-serif' }}>Drill Complete!</h1>
-                    <p className="text-lg text-neon-cyan font-bold mb-1">{correctCount}/{set.drills.length} correct</p>
-                    <p className="text-sm text-nebula-muted mb-6">Total time: {totalTime}s | Avg: {(totalTime / set.drills.length).toFixed(1)}s per command</p>
-                    <div className="space-y-2 text-left max-w-lg mx-auto mb-6">
+                <div className="max-w-3xl mx-auto px-4 py-10">
+                    <Confetti active={showConfetti} />
+                    <div className="text-center mb-8">
+                        {perfectScore ? (
+                            <div className="inline-flex w-16 h-16 rounded-full bg-neon-amber/10 items-center justify-center border border-neon-amber/20 mb-4">
+                                <Star className="w-8 h-8 text-neon-amber" />
+                            </div>
+                        ) : (
+                            <Trophy className="w-12 h-12 text-neon-amber mx-auto mb-4" />
+                        )}
+                        <h1 className="text-2xl font-extrabold text-nebula-text mb-2" style={{ fontFamily: 'Syne, system-ui, sans-serif' }}>
+                            {perfectScore ? 'Perfect Score!' : 'Drill Complete!'}
+                        </h1>
+                        <p className="text-3xl font-bold text-neon-cyan mb-1">{correctCount}/{set.drills.length}</p>
+                        <p className="text-sm text-nebula-muted">Total: {totalTime}s · Avg: {(totalTime / set.drills.length).toFixed(1)}s per command</p>
+                    </div>
+
+                    {/* Speed breakdown */}
+                    <div className="grid grid-cols-2 gap-3 mb-6">
+                        <div className="glass-card-static rounded-xl p-4 text-center">
+                            <TrendingUp className="w-4 h-4 text-neon-emerald mx-auto mb-1" />
+                            <div className="text-lg font-bold text-nebula-text font-mono">{fastest.timeUsed}s</div>
+                            <div className="text-[10px] text-nebula-muted">Fastest</div>
+                            <div className="text-[10px] text-nebula-dim truncate mt-0.5">{set.drills[fastest.drillIdx].prompt.slice(0, 40)}...</div>
+                        </div>
+                        <div className="glass-card-static rounded-xl p-4 text-center">
+                            <Clock className="w-4 h-4 text-neon-rose mx-auto mb-1" />
+                            <div className="text-lg font-bold text-nebula-text font-mono">{slowest.timeUsed}s</div>
+                            <div className="text-[10px] text-nebula-muted">Slowest</div>
+                            <div className="text-[10px] text-nebula-dim truncate mt-0.5">{set.drills[slowest.drillIdx].prompt.slice(0, 40)}...</div>
+                        </div>
+                    </div>
+
+                    {/* Individual results */}
+                    <div className="space-y-2 mb-6">
                         {results.map((r, i) => (
                             <div key={i} className={`flex items-center gap-2 px-3 py-2 rounded-lg ${r.correct ? 'bg-neon-emerald/10' : 'bg-neon-rose/10'}`}>
                                 {r.correct ? <CheckCircle2 className="w-4 h-4 text-neon-emerald shrink-0" /> : <XCircle className="w-4 h-4 text-neon-rose shrink-0" />}
-                                <span className="text-xs text-nebula-text flex-1">{set.drills[r.drillIdx].prompt}</span>
-                                <span className="text-[10px] text-nebula-dim">{r.timeUsed}s</span>
+                                <span className="text-xs text-nebula-text flex-1 truncate">{set.drills[r.drillIdx].prompt}</span>
+                                <span className="text-[10px] text-nebula-dim font-mono">{r.timeUsed}s</span>
                             </div>
                         ))}
                     </div>
+
                     <div className="flex gap-3 justify-center">
-                        <button onClick={() => startDrill(selectedSet)} className="btn-neon px-5 py-2 rounded-xl text-sm">Retry</button>
+                        <button onClick={() => startDrill(selectedSet)} className="btn-neon px-5 py-2 rounded-xl text-sm">Retry All</button>
+                        {wrongDrills.length > 0 && (
+                            <button onClick={() => startDrill(selectedSet)} className="px-5 py-2 rounded-xl bg-neon-rose/10 border border-neon-rose/25 text-neon-rose text-sm cursor-pointer hover:bg-neon-rose/20 transition-colors">
+                                Practice Weakest ({wrongDrills.length})
+                            </button>
+                        )}
                         <button onClick={() => setSelectedSet(null)} className="px-5 py-2 rounded-xl bg-nebula-surface border border-nebula-border text-nebula-muted text-sm cursor-pointer hover:text-nebula-text transition-colors">Back</button>
                     </div>
                 </div>

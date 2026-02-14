@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, ArrowRight, Command, Calendar, Trophy, Layout, BookOpen, Brain, RotateCcw, GraduationCap, GitCompareArrows, DollarSign, Terminal, Network, Award, ClipboardList, BarChart3, Wrench, Settings, StickyNote, Cloud } from 'lucide-react'
+import { Search, ArrowRight, Command, Calendar, Trophy, Layout, BookOpen, Brain, RotateCcw, GraduationCap, GitCompareArrows, DollarSign, Terminal, Network, Award, ClipboardList, BarChart3, Wrench, Settings, StickyNote, Cloud, Target, Flame, History, Keyboard, X } from 'lucide-react'
 import { GCP_SERVICES, GCP_SERVICE_CATEGORIES } from '../data/gcpServices'
 import { DAILY_SCENARIOS } from '../data/scenarios'
 import { CHALLENGES } from '../data/challenges'
@@ -25,6 +25,10 @@ const PAGES = [
   { path: '/scenario-builder', label: 'Scenario Builder', icon: Wrench, category: 'Pages' },
   { path: '/notes', label: 'Quick Notes', icon: StickyNote, category: 'Pages' },
   { path: '/settings', label: 'Settings', icon: Settings, category: 'Pages' },
+  { path: '/learning-paths', label: 'Learning Paths', icon: Target, category: 'Pages' },
+  { path: '/cheat-sheet', label: 'Command Cheat Sheet', icon: Terminal, category: 'Pages' },
+  { path: '/daily-challenge', label: 'Daily Challenge', icon: Flame, category: 'Pages' },
+  { path: '/exam/history', label: 'Exam History', icon: History, category: 'Pages' },
   { path: '/login', label: 'Login / Sign Up', icon: Cloud, category: 'Pages' },
 ]
 
@@ -93,6 +97,7 @@ function buildIndex() {
 
 export default function CommandPalette() {
   const [open, setOpen] = useState(false)
+  const [showShortcuts, setShowShortcuts] = useState(false)
   const [query, setQuery] = useState('')
   const [selectedIndex, setSelectedIndex] = useState(0)
   const inputRef = useRef(null)
@@ -148,8 +153,13 @@ export default function CommandPalette() {
         if (open) handleClose()
         else handleOpen()
       }
-      if (e.key === 'Escape' && open) {
-        handleClose()
+      if (e.key === '?' && !open && document.activeElement?.tagName !== 'INPUT' && document.activeElement?.tagName !== 'TEXTAREA') {
+        e.preventDefault()
+        setShowShortcuts((s) => !s)
+      }
+      if (e.key === 'Escape') {
+        if (showShortcuts) setShowShortcuts(false)
+        else if (open) handleClose()
       }
     }
     window.addEventListener('keydown', onKeyDown)
@@ -194,6 +204,14 @@ export default function CommandPalette() {
     return groups
   }, [results])
 
+  const SHORTCUTS = [
+    { keys: ['⌘', 'K'], desc: 'Open search / command palette' },
+    { keys: ['?'], desc: 'Show this shortcuts overlay' },
+    { keys: ['Esc'], desc: 'Close modal / overlay' },
+    { keys: ['↑', '↓'], desc: 'Navigate search results' },
+    { keys: ['↵'], desc: 'Select search result' },
+  ]
+
   return (
     <>
       {/* Trigger Button */}
@@ -208,6 +226,49 @@ export default function CommandPalette() {
           <Command className="w-2.5 h-2.5" />K
         </kbd>
       </button>
+
+      {/* Shortcuts Overlay */}
+      <AnimatePresence>
+        {showShortcuts && (
+          <>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm" onClick={() => setShowShortcuts(false)} />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96, y: -20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: -20 }}
+              transition={{ duration: 0.15 }}
+              className="fixed z-[101] top-[20%] left-1/2 -translate-x-1/2 w-[90%] max-w-md"
+            >
+              <div className="rounded-2xl border border-nebula-border overflow-hidden shadow-2xl" style={{ background: 'rgba(6, 9, 24, 0.98)', backdropFilter: 'blur(24px)' }}>
+                <div className="flex items-center justify-between px-5 py-4 border-b border-nebula-border">
+                  <div className="flex items-center gap-2">
+                    <Keyboard className="w-5 h-5 text-neon-cyan" />
+                    <span className="text-sm font-semibold text-nebula-text" style={{ fontFamily: 'Syne, system-ui, sans-serif' }}>Keyboard Shortcuts</span>
+                  </div>
+                  <button onClick={() => setShowShortcuts(false)} className="text-nebula-dim hover:text-nebula-muted cursor-pointer bg-transparent border-0">
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+                <div className="px-5 py-4 space-y-3">
+                  {SHORTCUTS.map((s) => (
+                    <div key={s.desc} className="flex items-center justify-between">
+                      <span className="text-sm text-nebula-muted">{s.desc}</span>
+                      <div className="flex items-center gap-1">
+                        {s.keys.map((k) => (
+                          <kbd key={k} className="px-2 py-1 text-[11px] text-nebula-text bg-nebula-surface/60 border border-nebula-border rounded font-mono min-w-[24px] text-center">{k}</kbd>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="px-5 py-2.5 border-t border-nebula-border text-[10px] text-nebula-dim text-center">
+                  Press <kbd className="px-1 py-0.5 rounded bg-nebula-surface/50 border border-nebula-border">?</kbd> anytime to toggle this overlay
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* Modal */}
       <AnimatePresence>
@@ -272,11 +333,10 @@ export default function CommandPalette() {
                               key={item.id}
                               onClick={() => handleSelect(item)}
                               onMouseEnter={() => setSelectedIndex(globalIdx)}
-                              className={`w-full flex items-center gap-3 px-5 py-2.5 text-left cursor-pointer transition-colors ${
-                                globalIdx === selectedIndex
-                                  ? 'bg-neon-cyan/8 text-nebula-text'
-                                  : 'text-nebula-muted hover:text-nebula-text'
-                              }`}
+                              className={`w-full flex items-center gap-3 px-5 py-2.5 text-left cursor-pointer transition-colors ${globalIdx === selectedIndex
+                                ? 'bg-neon-cyan/8 text-nebula-text'
+                                : 'text-nebula-muted hover:text-nebula-text'
+                                }`}
                               role="option"
                               aria-selected={globalIdx === selectedIndex}
                             >

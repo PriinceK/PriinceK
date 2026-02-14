@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { GraduationCap, Clock, Layers, ArrowRight, BarChart3 } from 'lucide-react'
+import { GraduationCap, Clock, Layers, ArrowRight, BarChart3, Zap } from 'lucide-react'
 import { EXAM_QUESTIONS } from '../data/examQuestions'
 import { DOMAINS } from '../utils/domainScoring'
 import { getExamHistory } from '../utils/progress'
@@ -59,6 +59,40 @@ export default function ExamSetup() {
         </p>
       </motion.div>
 
+      {/* Quick Start */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.05 }}
+        className="mb-8"
+      >
+        <button
+          onClick={() => {
+            const shuffled = [...EXAM_QUESTIONS].sort(() => Math.random() - 0.5).slice(0, 10)
+            const examConfig = { questions: shuffled.map((q) => q.id), timeLimit: 900, startedAt: Date.now() }
+            sessionStorage.setItem('current-exam', JSON.stringify(examConfig))
+            navigate('/exam/session')
+          }}
+          className="w-full group glass-card rounded-2xl p-5 flex items-center gap-4 cursor-pointer border-0 text-left hover:-translate-y-0.5 transition-all"
+          style={{ background: 'linear-gradient(135deg, rgba(0, 212, 255, 0.06), rgba(168, 85, 247, 0.06))' }}
+        >
+          <div className="w-12 h-12 rounded-xl bg-neon-cyan/10 flex items-center justify-center border border-neon-cyan/20 shrink-0">
+            <Zap className="w-6 h-6 text-neon-cyan" />
+          </div>
+          <div className="flex-1">
+            <div className="text-base font-bold text-nebula-text mb-0.5" style={{ fontFamily: 'Syne, system-ui, sans-serif' }}>Quick Start</div>
+            <div className="text-xs text-nebula-muted">10 random questions · 15 min · all domains</div>
+          </div>
+          <ArrowRight className="w-5 h-5 text-nebula-dim group-hover:text-neon-cyan group-hover:translate-x-1 transition-all shrink-0" />
+        </button>
+      </motion.div>
+
+      <div className="flex items-center gap-3 mb-6">
+        <div className="h-px flex-1 bg-nebula-border/30" />
+        <span className="text-[10px] uppercase tracking-widest text-nebula-dim" style={{ fontFamily: 'JetBrains Mono, monospace' }}>or customize</span>
+        <div className="h-px flex-1 bg-nebula-border/30" />
+      </div>
+
       {/* Last Exam Score */}
       {lastExam && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="glass-card-static rounded-2xl p-5 mb-8 flex items-center gap-4">
@@ -83,11 +117,10 @@ export default function ExamSetup() {
               <button
                 key={count}
                 onClick={() => setQuestionCount(count)}
-                className={`flex-1 py-3 rounded-xl border text-sm font-medium transition-all cursor-pointer ${
-                  questionCount === count
+                className={`flex-1 py-3 rounded-xl border text-sm font-medium transition-all cursor-pointer ${questionCount === count
                     ? 'border-neon-cyan/40 bg-neon-cyan/8 text-neon-cyan'
                     : 'border-nebula-border text-nebula-muted hover:border-nebula-border-bright hover:text-nebula-text'
-                }`}
+                  }`}
                 style={{ fontFamily: 'JetBrains Mono, monospace' }}
               >
                 {count}
@@ -107,11 +140,10 @@ export default function ExamSetup() {
               <button
                 key={seconds}
                 onClick={() => setTimeLimit(seconds)}
-                className={`flex-1 py-3 rounded-xl border text-sm font-medium transition-all cursor-pointer ${
-                  timeLimit === seconds
+                className={`flex-1 py-3 rounded-xl border text-sm font-medium transition-all cursor-pointer ${timeLimit === seconds
                     ? 'border-neon-amber/40 bg-neon-amber/8 text-neon-amber'
                     : 'border-nebula-border text-nebula-muted hover:border-nebula-border-bright hover:text-nebula-text'
-                }`}
+                  }`}
                 style={{ fontFamily: 'JetBrains Mono, monospace' }}
               >
                 {label}
@@ -134,11 +166,10 @@ export default function ExamSetup() {
                 <button
                   key={d.id}
                   onClick={() => toggleDomain(d.id)}
-                  className={`text-xs px-3 py-2 rounded-lg border transition-all cursor-pointer text-left ${
-                    active
+                  className={`text-xs px-3 py-2 rounded-lg border transition-all cursor-pointer text-left ${active
                       ? 'border-opacity-40 bg-opacity-10'
                       : 'border-nebula-border text-nebula-dim'
-                  }`}
+                    }`}
                   style={active ? { borderColor: d.color + '60', backgroundColor: d.color + '10', color: d.color } : {}}
                 >
                   {d.label}
