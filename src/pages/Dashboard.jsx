@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Calendar, Trophy, Layout, ArrowRight, Cloud, Target, TrendingUp, Sparkles, BookOpen, Brain, RotateCcw, GraduationCap, GitCompareArrows, DollarSign, Flame, Terminal, Network, Award, ClipboardList, BarChart3, Wrench, StickyNote, Settings } from 'lucide-react'
+import { Calendar, Trophy, Layout, ArrowRight, Cloud, Target, TrendingUp, Sparkles, BookOpen, Brain, RotateCcw, GraduationCap, GitCompareArrows, DollarSign, Flame, Terminal, Network, Award, ClipboardList, BarChart3, Wrench, StickyNote, Settings, Bug, Layers, AlertTriangle, FileCode2, Shield, Zap } from 'lucide-react'
 import { DAILY_SCENARIOS } from '../data/scenarios'
 import { CHALLENGES } from '../data/challenges'
 import { GCP_SERVICES } from '../data/gcpServices'
@@ -48,6 +48,13 @@ const LEARN_FEATURES = [
   { to: '/cost-labs', icon: DollarSign, color: '#10b981', title: 'Cost Labs', description: 'Optimize GCP infrastructure costs in interactive lab scenarios.' },
   { to: '/linux-lab', icon: Terminal, color: '#10b981', title: 'Linux Fundamentals', description: 'Master Linux commands in an interactive terminal with 30+ guided missions.' },
   { to: '/network-lab', icon: Network, color: '#a855f7', title: 'Networking Lab', description: 'Learn networking with hands-on DNS, firewall, and diagnostics exercises.' },
+  { to: '/gcloud-lab', icon: Cloud, color: '#4285f4', title: 'GCloud CLI Lab', description: 'Master gcloud, gsutil, kubectl, and bq commands in an interactive terminal.' },
+  { to: '/troubleshooting', icon: Bug, color: '#f43f5e', title: 'Troubleshooting Lab', description: 'Diagnose and fix real-world GCP infrastructure issues step by step.' },
+  { to: '/projects', icon: Layers, color: '#7c3aed', title: 'Project Mode', description: 'Guided multi-step projects that chain GCP concepts together end-to-end.' },
+  { to: '/arch-quiz', icon: AlertTriangle, color: '#f59e0b', title: 'Architecture Quiz', description: 'Identify flaws in broken architecture diagrams and fix design mistakes.' },
+  { to: '/terraform-lab', icon: FileCode2, color: '#7c3aed', title: 'Terraform Lab', description: 'Write infrastructure-as-code for GCP resources with guided exercises.' },
+  { to: '/iam-simulator', icon: Shield, color: '#10b981', title: 'IAM Simulator', description: 'Practice IAM role assignments, service accounts, and least-privilege design.' },
+  { to: '/timed-drills', icon: Zap, color: '#f59e0b', title: 'Timed Drills', description: 'Race against the clock to type GCP commands from memory.' },
   { to: '/achievements', icon: Award, color: '#f59e0b', title: 'Achievements', description: 'Earn 35+ badges and track your mastery milestones across all activities.' },
   { to: '/study-plan', icon: ClipboardList, color: '#00d4ff', title: 'Study Planner', description: 'Get a personalized daily study plan based on your strengths and weaknesses.' },
   { to: '/analytics', icon: BarChart3, color: '#00d4ff', title: 'Analytics', description: 'Visualize learning trends, domain breakdown, score history, and activity.' },

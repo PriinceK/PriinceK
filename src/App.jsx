@@ -28,6 +28,13 @@ import Analytics from './pages/Analytics'
 import ScenarioBuilder from './pages/ScenarioBuilder'
 import Notes from './pages/Notes'
 import SettingsPage from './pages/SettingsPage'
+import GCloudLab from './pages/GCloudLab'
+import TroubleshootingLab from './pages/TroubleshootingLab'
+import ProjectMode from './pages/ProjectMode'
+import ArchitectureQuiz from './pages/ArchitectureQuiz'
+import TerraformLab from './pages/TerraformLab'
+import IAMSimulator from './pages/IAMSimulator'
+import TimedDrills from './pages/TimedDrills'
 import AchievementToast from './components/AchievementToast'
 import Onboarding from './components/Onboarding'
 
@@ -77,6 +84,13 @@ export default function App() {
             <Route path="/cost-labs/:labId" element={<AnimatedPage><CostLabDetail /></AnimatedPage>} />
             <Route path="/linux-lab" element={<LinuxLab />} />
             <Route path="/network-lab" element={<NetworkLab />} />
+            <Route path="/gcloud-lab" element={<GCloudLab />} />
+            <Route path="/troubleshooting" element={<AnimatedPage><TroubleshootingLab /></AnimatedPage>} />
+            <Route path="/projects" element={<AnimatedPage><ProjectMode /></AnimatedPage>} />
+            <Route path="/arch-quiz" element={<AnimatedPage><ArchitectureQuiz /></AnimatedPage>} />
+            <Route path="/terraform-lab" element={<AnimatedPage><TerraformLab /></AnimatedPage>} />
+            <Route path="/iam-simulator" element={<AnimatedPage><IAMSimulator /></AnimatedPage>} />
+            <Route path="/timed-drills" element={<AnimatedPage><TimedDrills /></AnimatedPage>} />
             <Route path="/achievements" element={<AnimatedPage><Achievements /></AnimatedPage>} />
             <Route path="/study-plan" element={<AnimatedPage><StudyPlanner /></AnimatedPage>} />
             <Route path="/analytics" element={<AnimatedPage><Analytics /></AnimatedPage>} />

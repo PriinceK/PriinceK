@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Cloud, Calendar, Trophy, Layout, BookOpen, Brain, RotateCcw, GraduationCap, GitCompareArrows, DollarSign, ChevronDown, Terminal, Network, Award, ClipboardList, BarChart3, Wrench, StickyNote, Settings } from 'lucide-react'
+import { Cloud, Calendar, Trophy, Layout, BookOpen, Brain, RotateCcw, GraduationCap, GitCompareArrows, DollarSign, ChevronDown, Terminal, Network, Award, ClipboardList, BarChart3, Wrench, StickyNote, Settings, Bug, Layers, AlertTriangle, FileCode2, Shield, Zap } from 'lucide-react'
 import UserMenu from './UserMenu'
 import CommandPalette from './CommandPalette'
 
@@ -20,7 +20,14 @@ const LEARN_ITEMS = [
   { to: '/compare', label: 'Compare Services', icon: GitCompareArrows, color: '#f59e0b' },
   { to: '/cost-labs', label: 'Cost Labs', icon: DollarSign, color: '#10b981' },
   { to: '/linux-lab', label: 'Linux Fundamentals', icon: Terminal, color: '#10b981' },
+  { to: '/gcloud-lab', label: 'GCloud CLI Lab', icon: Cloud, color: '#4285f4' },
   { to: '/network-lab', label: 'Networking Lab', icon: Network, color: '#a855f7' },
+  { to: '/troubleshooting', label: 'Troubleshooting', icon: Bug, color: '#f43f5e' },
+  { to: '/projects', label: 'Project Mode', icon: Layers, color: '#7c3aed' },
+  { to: '/arch-quiz', label: 'Architecture Quiz', icon: AlertTriangle, color: '#f59e0b' },
+  { to: '/terraform-lab', label: 'Terraform Lab', icon: FileCode2, color: '#7c3aed' },
+  { to: '/iam-simulator', label: 'IAM Simulator', icon: Shield, color: '#10b981' },
+  { to: '/timed-drills', label: 'Timed Drills', icon: Zap, color: '#f59e0b' },
   { to: '/achievements', label: 'Achievements', icon: Award, color: '#f59e0b' },
   { to: '/study-plan', label: 'Study Planner', icon: ClipboardList, color: '#00d4ff' },
   { to: '/analytics', label: 'Analytics', icon: BarChart3, color: '#00d4ff' },
@@ -80,11 +87,10 @@ export default function Navbar() {
                 <Link
                   key={to}
                   to={to}
-                  className={`relative flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium no-underline transition-all duration-200 ${
-                    active
-                      ? 'text-neon-cyan'
-                      : 'text-nebula-muted hover:text-nebula-text hover:bg-nebula-surface/50'
-                  }`}
+                  className={`relative flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium no-underline transition-all duration-200 ${active
+                    ? 'text-neon-cyan'
+                    : 'text-nebula-muted hover:text-nebula-text hover:bg-nebula-surface/50'
+                    }`}
                   aria-current={active ? 'page' : undefined}
                   aria-label={label}
                 >
@@ -106,11 +112,10 @@ export default function Navbar() {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setLearnOpen((p) => !p)}
-                className={`relative flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer ${
-                  isLearnActive
-                    ? 'text-neon-cyan'
-                    : 'text-nebula-muted hover:text-nebula-text hover:bg-nebula-surface/50'
-                }`}
+                className={`relative flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer ${isLearnActive
+                  ? 'text-neon-cyan'
+                  : 'text-nebula-muted hover:text-nebula-text hover:bg-nebula-surface/50'
+                  }`}
                 aria-expanded={learnOpen}
                 aria-haspopup="true"
               >
@@ -148,11 +153,10 @@ export default function Navbar() {
                         <Link
                           key={to}
                           to={to}
-                          className={`flex items-center gap-3 px-4 py-2.5 no-underline text-sm transition-all ${
-                            active
-                              ? 'text-nebula-text bg-nebula-surface/50'
-                              : 'text-nebula-muted hover:text-nebula-text hover:bg-nebula-surface/30'
-                          }`}
+                          className={`flex items-center gap-3 px-4 py-2.5 no-underline text-sm transition-all ${active
+                            ? 'text-nebula-text bg-nebula-surface/50'
+                            : 'text-nebula-muted hover:text-nebula-text hover:bg-nebula-surface/30'
+                            }`}
                         >
                           <Icon className="w-4 h-4 shrink-0" style={{ color }} />
                           {label}
