@@ -6,7 +6,7 @@ import {
   GraduationCap, GitCompareArrows, DollarSign, ChevronDown, Terminal,
   Network, Award, ClipboardList, BarChart3, Wrench, StickyNote, Settings,
   Bug, Layers, AlertTriangle, FileCode2, Shield, Zap, Menu, X,
-  Target, Flame, History,
+  Target, Flame, History, ShoppingCart,
 } from 'lucide-react'
 import UserMenu from './UserMenu'
 import CommandPalette from './CommandPalette'
@@ -47,6 +47,7 @@ const LEARN_SECTIONS = [
       { to: '/projects', label: 'Project Mode', icon: Layers, color: '#7c3aed' },
       { to: '/troubleshooting', label: 'Troubleshooting', icon: Bug, color: '#f43f5e' },
       { to: '/scenario-builder', label: 'Scenario Builder', icon: Wrench, color: '#f59e0b' },
+      { to: '/amazon-price', label: 'Amazon Scout', icon: ShoppingCart, color: '#f59e0b' },
     ],
   },
   {

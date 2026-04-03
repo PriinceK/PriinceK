@@ -39,6 +39,7 @@ import LearningPaths from './pages/LearningPaths'
 import CommandCheatSheet from './pages/CommandCheatSheet'
 import DailyChallenge from './pages/DailyChallenge'
 import ExamHistory from './pages/ExamHistory'
+import AmazonPriceComparison from './pages/AmazonPriceComparison'
 import AchievementToast from './components/AchievementToast'
 import Onboarding from './components/Onboarding'
 import Footer from './components/Footer'
@@ -108,6 +109,7 @@ export default function App() {
             <Route path="/cheat-sheet" element={<AnimatedPage><CommandCheatSheet /></AnimatedPage>} />
             <Route path="/daily-challenge" element={<AnimatedPage><DailyChallenge /></AnimatedPage>} />
             <Route path="/exam/history" element={<AnimatedPage><ExamHistory /></AnimatedPage>} />
+            <Route path="/amazon-price" element={<AnimatedPage><AmazonPriceComparison /></AnimatedPage>} />
             <Route path="/login" element={<AnimatedPage><Login /></AnimatedPage>} />
           </Routes>
         </AnimatePresence>
