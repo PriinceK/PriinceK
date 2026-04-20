@@ -6,7 +6,7 @@ import {
   GraduationCap, GitCompareArrows, DollarSign, ChevronDown, Terminal,
   Network, Award, ClipboardList, BarChart3, Wrench, StickyNote, Settings,
   Bug, Layers, AlertTriangle, FileCode2, Shield, Zap, Menu, X,
-  Target, Flame, History,
+  Target, Flame, History, ShoppingBasket,
 } from 'lucide-react'
 import UserMenu from './UserMenu'
 import CommandPalette from './CommandPalette'
@@ -16,6 +16,7 @@ const MAIN_NAV = [
   { to: '/day-as', label: 'A Day As...', icon: Calendar },
   { to: '/challenges', label: 'Challenges', icon: Trophy },
   { to: '/canvas', label: 'Arch Canvas', icon: Layout },
+  { to: '/grocery', label: 'Grocery Compare', icon: ShoppingBasket },
 ]
 
 const LEARN_SECTIONS = [
